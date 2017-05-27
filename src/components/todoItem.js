@@ -15,7 +15,7 @@ export default class TodoItem extends React.Component {
 		return (
 			<li className={[
 				todo.completed ? "completed": "",
-				expr(() => todo === viewStore.todoBeingEdited ? "editing" : "")
+				todo === viewStore.todoBeingEdited ? "editing" : ""
 			].join(" ")}>
 				<div className="view">
 					<input
