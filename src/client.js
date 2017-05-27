@@ -9,11 +9,12 @@ const initialState = window.initialState && JSON.parse(window.initialState) || {
 
 console.log("initialState: ", initialState);
 
-var todoStore = TodoStore.fromJS(initialState.todos || [], initialState.tags || []);
+var todoStore = TodoStore.fromJS(initialState.todos || [], initialState.tags || [], initialState.todotags || []);
 var viewStore = new ViewStore();
 
-todoStore.subscribeServerToStore();
-todoStore.subscribeServerToStore1();
+todoStore.subscribeServerToStoreTodo();
+todoStore.subscribeServerToStoreTag();
+todoStore.subscribeServerToStoreTodoTag();                                                                                                               
 
 ReactDOM.render(
 	<TodoApp todoStore={todoStore} viewStore={viewStore}/>,

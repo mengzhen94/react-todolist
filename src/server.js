@@ -23,7 +23,7 @@ app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output
 app.use(webpackHotMiddleware(compiler));
 
 const renderFullPage = html => {
-	const initialState = { todos, tags };
+	const initialState = { todos, tags, todotags };
 	const initialStateJSON = escape( // So safe!
 		JSON.stringify(initialState),
 		{ wrap: true, isScriptContext: true, json: true }
@@ -55,11 +55,12 @@ const renderFullPage = html => {
 
 let todos = []; // Todos are stored here
 let tags = [];
+let todotags = [];
 
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-	const todoStore = TodoStore.fromJS(todos, tags);
+	const todoStore = TodoStore.fromJS(todos, tags, todotags);
 	const viewStore = new ViewStore();
 
 	const initView = renderToString((
@@ -92,6 +93,18 @@ app.post('/api/tags', function(req, res) {
 		res.status(201).send(JSON.stringify({ success: true }));
 	} else {
 		res.status(200).send(JSON.stringify({ success: false, error: "expected `tags` to be array" }));
+	}
+});
+
+app.post('/api/todotags', function(req, res) {
+	todotags = req.body.todotags;
+	console.log("todotags:", todotags);
+	if (Array.isArray(todotags)) {
+		console.log(`Updated todos (${todotags.length})`);
+		console.log(JSON.stringify(todotags, null, 2));
+		res.status(201).send(JSON.stringify({ success: true }));
+	} else {
+		res.status(200).send(JSON.stringify({ success: false, error: "expected `todotags` to be array" }));
 	}
 });
 

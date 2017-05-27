@@ -1,35 +1,29 @@
 import {observable} from 'mobx';
 
-export default class TagModel {
-	todoid;
-    title
+export default class TodoTagModel {
+    store;
+	todoId;
+    tagId;
 
-	constructor(todoId, tagId) {
+	constructor(store, todoId, tagId) {
+        this.store = store;
 		this.todoId = todoId;
-		this.title = title;
-	}
-
-	toggle() {
-		this.completed = !this.completed;
+		this.tagId = tagId;
 	}
 
 	destroy() {
-		this.store.todos.remove(this);
+		this.store.todotags.remove(this);
 	}
 
-	setTitle(title) {
-		this.title = title;
-	}
 
 	toJS() {
 		return {
-			id: this.id,
-			title: this.title,
-			completed: this.completed
+			todoId: this.todoId,
+			tagId: this.tagId
 		};
 	}
 
 	static fromJS(store, object) {
-		return new TodoModel(store, object.id, object.title, object.completed);
+		return new TodoModel(store, object.todoId, object.tagId);
 	}
 }
