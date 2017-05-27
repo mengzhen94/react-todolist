@@ -59,10 +59,12 @@ export default class TodoEntry extends React.Component {
 				onKeyDown={this.handleNewTodoKeyDown}
 				autoFocus={true}
 			/>
+			<div>
 			<ReactTags tags={tags}
                 handleDelete={this.handleDelete}
                 handleAddition={this.handleAddition}
                 handleDrag={this.handleDrag} />
+			</div>
 		</section>
 	}
 
@@ -76,13 +78,17 @@ export default class TodoEntry extends React.Component {
 
 		var val = ReactDOM.findDOMNode(this.refs.newField).value.trim();
 
-		var tags = this.state.tags;
-		console.log(tags);
-
 		if (val) {
 			this.props.todoStore.addTodo(val);
 			ReactDOM.findDOMNode(this.refs.newField).value = '';
 		}
+
+		var tags = this.state.tags;
+		console.log(tags);
+		if(tags) {
+			this.props.todoStore.addTags(tags);
+		}
+
 	};
 }
 

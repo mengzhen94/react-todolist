@@ -12,6 +12,7 @@ import React from 'react';
 
 const app = express();
 app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')))
+app.use('/src', express.static(path.join(__dirname, '../src')))
 
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -22,7 +23,7 @@ app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output
 app.use(webpackHotMiddleware(compiler));
 
 const renderFullPage = html => {
-	const initialState = { todos };
+	const initialState = { todos, tags };
 	const initialStateJSON = escape( // So safe!
 		JSON.stringify(initialState),
 		{ wrap: true, isScriptContext: true, json: true }
@@ -33,6 +34,7 @@ const renderFullPage = html => {
 		<head>
 			<link rel="stylesheet" href="/node_modules/todomvc-common/base.css">
 			<link rel="stylesheet" href="/node_modules/todomvc-app-css/index.css">
+			<link rel="stylesheet" href="/src/css/change.css">
 			<script>
 				window.initialState = ${initialStateJSON}
 			</script>
@@ -52,11 +54,12 @@ const renderFullPage = html => {
 };
 
 let todos = []; // Todos are stored here
+let tags = [];
 
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-	const todoStore = TodoStore.fromJS(todos);
+	const todoStore = TodoStore.fromJS(todos, tags);
 	const viewStore = new ViewStore();
 
 	const initView = renderToString((
@@ -70,12 +73,25 @@ app.get('/', function(req, res) {
 
 app.post('/api/todos', function(req, res) {
 	todos = req.body.todos;
+	console.log("todos:", todos);
 	if (Array.isArray(todos)) {
 		console.log(`Updated todos (${todos.length})`);
 		console.log(JSON.stringify(todos, null, 2));
 		res.status(201).send(JSON.stringify({ success: true }));
 	} else {
 		res.status(200).send(JSON.stringify({ success: false, error: "expected `todos` to be array" }));
+	}
+});
+
+app.post('/api/tags', function(req, res) {
+	tags = req.body.tags;
+	console.log("tags:", tags);
+	if (Array.isArray(tags)) {
+		console.log(`Updated todos (${tags.length})`);
+		console.log(JSON.stringify(tags, null, 2));
+		res.status(201).send(JSON.stringify({ success: true }));
+	} else {
+		res.status(200).send(JSON.stringify({ success: false, error: "expected `tags` to be array" }));
 	}
 });
 
