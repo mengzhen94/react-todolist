@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
+import { WithContext as ReactTags } from 'react-tag-input';
 
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
@@ -10,8 +11,38 @@ const ENTER_KEY = 13;
 export default class TodoItem extends React.Component {
 	@observable editText = "";
 
+	constructor(props) {
+        super(props);
+
+        this.state = {
+            tags: [],
+			placeholder : "Add Additional Tags"                                                                                                                        
+        };
+        this.handleAddition = this.handleAddition.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
+    }
+
+	handleAddition(tag) {
+		console.log("this.state", this.state);
+        let tags = this.state.tags;
+        tags.push({
+            id: tags.length + 1,
+            text: tag
+        });
+        this.setState({tags: tags});
+		console.log("this.state", this.state);
+    }
+
+	handleDelete(i) {
+        let tags = this.state.tags;
+        tags.splice(i, 1);
+        this.setState({tags: tags});
+    }
+
+
 	render() {
 		const {viewStore, todo, todoStore} = this.props;
+		const {tags, placeholder} = this.state;
 		return (
 			<li className={[
 				todo.completed ? "completed": "",
@@ -38,13 +69,17 @@ export default class TodoItem extends React.Component {
 					onChange={this.handleChange}
 					onKeyDown={this.handleKeyDown}
 				/>
-
-				
+				<ReactTags tags={tags}
+				placeholder={placeholder}
+                handleAddition={this.handleAddition}
+				handleDelete={this.handleDelete}
+				/>
+				<button className="addTag" onClick={this.addTag} />
 			</li>
 		);
 	}
 
-	showTags() {
+	showTags = () => {
 		var id = this.props.todo.id;
 		var todotags = this.props.todoStore.todotags;
 		var tags = this.props.todoStore.tags;
@@ -61,6 +96,17 @@ export default class TodoItem extends React.Component {
 		return thisTag;
 	}
 
+	addTag = () => {
+		console.log("this.state", this.state);
+		var tags = this.state.tags;
+		console.log(tags);
+		if(tags) {
+			this.props.todoStore.addAdditionTags(tags, this.props.todo.id);
+		}
+		this.state.tags = [];
+
+	}
+
 	handleSubmit = (event) => {
 		const val = this.editText.trim();
 		if (val) {
@@ -73,6 +119,7 @@ export default class TodoItem extends React.Component {
 	};
 
 	handleDestroy = () => {
+		this.props.todoStore.removeTags(this.props.todo.id);
 		this.props.todo.destroy();
 		this.props.viewStore.todoBeingEdited = null;
 	};

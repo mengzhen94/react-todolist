@@ -14,7 +14,7 @@ export default class TodoEntry extends React.Component {
         super(props);
 
         this.state = {
-            tags: [{ id: 1, text: "Thailand" }, { id: 2, text: "India" }]
+            tags: [{ id: 1, text: "Tag1" }, { id: 2, text: "Tag2" }]
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
@@ -49,7 +49,7 @@ export default class TodoEntry extends React.Component {
     }
 
 	render() {
-		const { tags} = this.state;
+		const {tags} = this.state;
 
 		return <section>
 			<input
@@ -88,7 +88,7 @@ export default class TodoEntry extends React.Component {
 		if(tags) {
 			this.props.todoStore.addTags(tags);
 		}
-
+		
 	};
 }
 

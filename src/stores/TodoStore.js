@@ -112,6 +112,60 @@ export default class TodoStore {
 		}		
 	}
 
+	addAdditionTags (array, id) {
+		for (var i = 0; i < array.length; i++) { 
+			console.log("thisTag: ", array[i].text);
+			var saved = false;
+			for(var j = 0; j < this.tags.length; j++){
+				if(this.tags[j].title == array[i].text) {
+					saved = true;
+					var newTag = this.tags[j];
+					console.log("this tag has been saved:", newTag.id);
+				}
+			}
+			if(!saved){
+				var newTag = new TagModel(this, Utils.uuid(), array[i].text);
+				this.tags.push(newTag);
+			}
+			
+			var newTodoTag = new TodoTagModel(this, id, newTag.id);
+			this.todotags.push(newTodoTag);
+		}		
+	}
+
+	removeTags(id) {
+		var tags = [];
+		
+		for (var i = this.todotags.length; i--;) {
+    		if (this.todotags[i].todoId === id) {
+				tags.push(this.todotags[i].tagId);
+				console.log("need to delete this tags", this.todotags[i].tagId);
+        		this.todotags[i].destroy();
+    		}
+		}
+		for (var i = tags.length; i--;) {
+			var exist = false;
+			this.todotags.forEach(
+				todotag => {
+					if(todotag.tagId === tags[i]){
+						exist = true;
+					}
+				}
+			)
+			if(exist === false){
+				this.tags.forEach(
+					tag => {
+						if(tag.id == tags[i]){
+							console.log("destroy this tag", tags[i]);
+							tag.destroy();
+						}
+					}
+				)			
+			}
+		}
+
+	}
+
 	toggleAll (checked) {
 		this.todos.forEach(
 			todo => todo.completed = checked
