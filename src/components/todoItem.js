@@ -11,7 +11,7 @@ export default class TodoItem extends React.Component {
 	@observable editText = "";
 
 	render() {
-		const {viewStore, todo} = this.props;
+		const {viewStore, todo, todoStore} = this.props;
 		return (
 			<li className={[
 				todo.completed ? "completed": "",
@@ -28,6 +28,7 @@ export default class TodoItem extends React.Component {
 						{todo.title}
 					</label>
 					<button className="destroy" onClick={this.handleDestroy} />
+					{this.showTags().map(tag =>(<span key={tag.id}>{tag.title} </span>))}
 				</div>
 				<input
 					ref="editField"
@@ -37,8 +38,27 @@ export default class TodoItem extends React.Component {
 					onChange={this.handleChange}
 					onKeyDown={this.handleKeyDown}
 				/>
+
+				
 			</li>
 		);
+	}
+
+	showTags() {
+		var id = this.props.todo.id;
+		var todotags = this.props.todoStore.todotags;
+		var tags = this.props.todoStore.tags;
+		var thisTag = [];
+		for(var i = 0; i < todotags.length; i++){
+			if(todotags[i].todoId === id){
+				for(var j = 0; j < tags.length; j++){
+					if(tags[j].id === todotags[i].tagId){
+						thisTag.push(tags[j]);
+					}
+				}
+			}
+		}
+		return thisTag;
 	}
 
 	handleSubmit = (event) => {

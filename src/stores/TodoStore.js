@@ -50,7 +50,6 @@ export default class TodoStore {
 	}
 
 	subscribeServerToStoreTodoTag() {
-		console.log("subscribeServerToStoreTodoTag");
 		reaction(
 			() => this.todotagToJS(),
 			todotags => fetch('/api/todotags', {
@@ -67,7 +66,6 @@ export default class TodoStore {
 			() => this.todoToJS(),
 			todos => localStorage.setItem('mobx-react-todomvc-todos', JSON.stringify({ todos }))
 		);
-		console.log("subscribeLocalstorageToStore");
 	}
 
 	subscribeLocalstorageToStoreTag() {
@@ -75,15 +73,13 @@ export default class TodoStore {
 			() => this.tagToJS(),
 			tags => localStorage.setItem('mobx-react-todomvc-tags', JSON.stringify({ tags }))
 		);
-		console.log("subscribeLocalstorageToStore1");
 	}
 
-	subscribeLocalstorageToStoreTag() {
+	subscribeLocalstorageToStoreTodoTag() {
 		reaction(
 			() => this.todotagToJS(),
 			todotags => localStorage.setItem('mobx-react-todomvc-todotags', JSON.stringify({ todotags }))
 		);
-		console.log("subscribeLocalstorageToStoreTag");
 	}
 
 	addTodo (title) {
@@ -147,7 +143,7 @@ export default class TodoStore {
 		const todoStore = new TodoStore();
 		todoStore.todos = todo.map(item => TodoModel.fromJS(todoStore, item));
 		todoStore.tags = tag.map(item => TagModel.fromJS(todoStore, item));
-		todoStore.todotags = tag.map(item => TodoTagModel.fromJS(todoStore, item));
+		todoStore.todotags = todotags.map(item => TodoTagModel.fromJS(todoStore, item));
 		return todoStore;
 	}
 }

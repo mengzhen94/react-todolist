@@ -24,6 +24,6 @@ export default class TodoTagModel {
 	}
 
 	static fromJS(store, object) {
-		return new TodoModel(store, object.todoId, object.tagId);
+		return new TodoTagModel(store, object.todoId, object.tagId);
 	}
 }
