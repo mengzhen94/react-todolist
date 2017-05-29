@@ -59,22 +59,31 @@ export default class TodoItem extends React.Component {
 						{todo.title}
 					</label>
 					<button className="destroy" onClick={this.handleDestroy} />
-					{this.showTags().map(tag =>(<span key={tag.id}>{tag.title} </span>))}
 				</div>
-				<input
-					ref="editField"
-					className="edit"
-					value={this.editText}
-					onBlur={this.handleSubmit}
-					onChange={this.handleChange}
-					onKeyDown={this.handleKeyDown}
-				/>
-				<ReactTags tags={tags}
-				placeholder={placeholder}
-                handleAddition={this.handleAddition}
-				handleDelete={this.handleDelete}
-				/>
-				<button className="addTag" onClick={this.addTag} />
+				
+				<div>
+					<input
+						ref="editField"
+						className="edit"
+						value={this.editText}
+						onBlur={this.handleSubmit}
+						onChange={this.handleChange}
+						onKeyDown={this.handleKeyDown}
+					/>
+					<div className="tag">
+						{this.showTags().map(tag =>(<span key={tag.id}>{tag.title}</span>))}
+					</div>
+					<div className="add-tag-line">
+						<div className="addtional-tag">
+							<ReactTags tags={tags}
+							placeholder={placeholder}
+                			handleAddition={this.handleAddition}
+							handleDelete={this.handleDelete}
+							/>
+						</div>
+						<button className="addTag" onClick={this.addTag} />
+					</div>
+				</div>
 			</li>
 		);
 	}

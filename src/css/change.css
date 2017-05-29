@@ -6,14 +6,93 @@
 	height: 30px;
 }
 
+.todo-list li .toggle {
+	margin-top: 0px;
+}
+.todo-list li .label {
+    padding: 5px 15px 5px 60px;
+
+}
+
+.ReactTags__selected {
+    margin-left: 10%;
+}
+
+div.ReactTags__tagInput {
+    width: 200px !important;
+    display: inline-block;
+}
+
+.ReactTags__tagInput input.ReactTags__tagInputField,
+.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+    height: 22px;
+    font-size: 12px !important;
+    display: inline-block;
+    border: 1px solid #f7d1d1;
+    background: #f9f6f6;
+    border-radius: 2px;
+    margin-left: 2%;
+}
+
+.ReactTags__selected span.ReactTags__tag {
+    border: 1px solid #f1d1d1;
+    background: #f5e3e3;
+    font-size: 12px !important;
+    display: inline-block;
+    padding: 2px;
+    margin: 0 5px;
+    cursor: move;
+    border-radius: 2px;
+}
+
+.todo-list li .destroy {
+	margin-top: 9px;	
+}
+
+.todo-list li .tag {
+	font-size: 12px;
+	margin-left: 10%;
+	margin-bottom: 2px;	
+	display: inline-block;
+}
+
+.todo-list li .tag span {
+	border: 1px solid #f1d1d1;
+	background: #f5e3e3;
+	padding: 2px;
+	margin: 0 5px;
+	border-radius: 2px;
+}
+
+.add-tag-line {
+	margin-bottom: 10px;
+}
+
+.addtional-tag {
+	display: inline-block;
+	margin-left: 6.5%;
+}
+
+.addtional-tag .ReactTags__tags {
+	display: inline-block;
+}
+
 .todo-list li .addTag:hover {
 	color: #af5b5e;
 }
 
 .todo-list li .addTag:after {
-	content: '+';
+	content: 'Add Tag';
+	font-size:12px;
 }
 
-.todo-list li:hover .addTag {
-	display: block;
+.todo-list li .addTag {
+    background: #f5e3e3;
+    border: 1px solid #f1d1d1;
+    height: 25px;
+    width: 50px;
+    font-size: 12px;
+    border-radius: 2px;
+	float: right;
+    margin-right: 10%;
 }

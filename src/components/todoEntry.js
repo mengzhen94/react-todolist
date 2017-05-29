@@ -59,12 +59,10 @@ export default class TodoEntry extends React.Component {
 				onKeyDown={this.handleNewTodoKeyDown}
 				autoFocus={true}
 			/>
-			<div>
 			<ReactTags tags={tags}
                 handleDelete={this.handleDelete}
                 handleAddition={this.handleAddition}
                 handleDrag={this.handleDrag} />
-			</div>
 		</section>
 	}
 
