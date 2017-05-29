@@ -7,8 +7,6 @@ import ReactDOM from 'react-dom';
 
 const initialState = window.initialState && JSON.parse(window.initialState) || {};
 
-console.log("initialState: ", initialState);
-
 var todoStore = TodoStore.fromJS(initialState.todos || [], initialState.tags || [], initialState.todotags || []);
 var viewStore = new ViewStore();
 

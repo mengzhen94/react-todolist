@@ -23,7 +23,6 @@ export default class TodoItem extends React.Component {
     }
 
 	handleAddition(tag) {
-		console.log("this.state", this.state);
         let tags = this.state.tags;
         tags.push({
             id: tags.length + 1,
@@ -106,14 +105,11 @@ export default class TodoItem extends React.Component {
 	}
 
 	addTag = () => {
-		console.log("this.state", this.state);
 		var tags = this.state.tags;
-		console.log(tags);
 		if(tags) {
 			this.props.todoStore.addAdditionTags(tags, this.props.todo.id);
 		}
 		this.state.tags = [];
-
 	}
 
 	handleSubmit = (event) => {

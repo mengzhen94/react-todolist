@@ -1,11 +1,3 @@
-.footer {
-	height: 50px;
-}
-
-.footer div {
-	height: 30px;
-}
-
 .todo-list li .toggle {
 	margin-top: 0px;
 }
@@ -96,3 +88,36 @@ div.ReactTags__tagInput {
 	float: right;
     margin-right: 10%;
 }
+
+/* Footer */
+
+.footer {
+	height: 50px;
+}
+
+.footer div {
+	height: 30px;
+}
+
+.tag-button {
+    margin-bottom: 5px;
+}
+
+.tag-button button {
+	color: inherit;
+	margin: 3px;
+	padding: 3px 7px;
+	text-decoration: none;
+	border: 1px solid transparent;
+	border-radius: 3px;
+    border-color: rgba(175, 47, 47, 0.1);
+}
+
+.tag-button button:hover {
+    background-color:rgba(175, 47, 47, 0.1);
+}
+
+.tag-button button.selected {
+	border-color: rgba(175, 47, 47, 0.2);
+}
+

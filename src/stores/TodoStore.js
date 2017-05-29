@@ -25,7 +25,6 @@ export default class TodoStore {
 
 
 	subscribeServerToStoreTodo() {
-		console.log("subscribeServerToStore");
 		reaction(
 			() => this.todoToJS(),
 			todos => fetch('/api/todos', {
@@ -46,7 +45,6 @@ export default class TodoStore {
 				headers: new Headers({ 'Content-Type': 'application/json' })
 			})
 		);
-		console.log("subscribeServerToStore1");
 	}
 
 	subscribeServerToStoreTodoTag() {
@@ -88,15 +86,12 @@ export default class TodoStore {
 	}
 
 	addTags (array) {
-		for (var i = 0; i < array.length; i++) { 
-			console.log("newTodo: ", this.newTodo.id);
-			console.log("thisTag: ", array[i].text);
+		for (var i = 0; i < array.length; i++) {
 			var saved = false;
 			for(var j = 0; j < this.tags.length; j++){
 				if(this.tags[j].title == array[i].text) {
 					saved = true;
 					var newTag = this.tags[j];
-					console.log("this tag has been saved:", newTag.id);
 				}
 			}
 
@@ -107,29 +102,34 @@ export default class TodoStore {
 			
 			var newTodoTag = new TodoTagModel(this, this.newTodo.id, newTag.id);
 			this.todotags.push(newTodoTag);
-			console.log("tags:", this.tags);
-			console.log("todotags:", this.todotags);
 		}		
 	}
 
 	addAdditionTags (array, id) {
-		for (var i = 0; i < array.length; i++) { 
-			console.log("thisTag: ", array[i].text);
+		for (var i = 0; i < array.length; i++) {
 			var saved = false;
 			for(var j = 0; j < this.tags.length; j++){
 				if(this.tags[j].title == array[i].text) {
 					saved = true;
 					var newTag = this.tags[j];
-					console.log("this tag has been saved:", newTag.id);
 				}
 			}
 			if(!saved){
 				var newTag = new TagModel(this, Utils.uuid(), array[i].text);
 				this.tags.push(newTag);
 			}
-			
-			var newTodoTag = new TodoTagModel(this, id, newTag.id);
-			this.todotags.push(newTodoTag);
+			var tagSaved = false;
+			this.todotags.forEach(
+				todotag => {
+					if(todotag.todoId === id && todotag.tagId === newTag.id){
+						tagSaved = true;
+					}
+				}
+			)
+			if(!tagSaved){
+				var newTodoTag = new TodoTagModel(this, id, newTag.id);
+				this.todotags.push(newTodoTag);
+			}	
 		}		
 	}
 
@@ -139,7 +139,6 @@ export default class TodoStore {
 		for (var i = this.todotags.length; i--;) {
     		if (this.todotags[i].todoId === id) {
 				tags.push(this.todotags[i].tagId);
-				console.log("need to delete this tags", this.todotags[i].tagId);
         		this.todotags[i].destroy();
     		}
 		}
@@ -156,7 +155,6 @@ export default class TodoStore {
 				this.tags.forEach(
 					tag => {
 						if(tag.id == tags[i]){
-							console.log("destroy this tag", tags[i]);
 							tag.destroy();
 						}
 					}
@@ -179,17 +177,14 @@ export default class TodoStore {
 	}
 
 	todoToJS() {
-		console.log("todotojs");
 		return this.todos.map(todo => todo.toJS());
 	}
 
 	tagToJS() {
-		console.log("tagtojs");
 		return this.tags.map(tag => tag.toJS());
 	}
 
 	todotagToJS() {
-		console.log("todotagtojs");
 		return this.todotags.map(todotag => todotag.toJS());
 	}
 

@@ -15,9 +15,8 @@ export default class TodoFooter extends React.Component {
 
 		return (
 			<footer className="footer">
-				<div>
-					<span>{todoStore.tags.length} tags </span>
-					{todoStore.tags.map(tag =>(<span key={tag.id}>{tag.title} </span>))}	
+				<div className="tag-button">
+					{todoStore.tags.map(tag =>(<button key={tag.id}>{tag.title} </button>))}	
 				</div>
 				<span className="todo-count">
 					<strong>{todoStore.activeTodoCount}</strong> {activeTodoWord} left
