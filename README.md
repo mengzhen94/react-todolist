@@ -1,6 +1,14 @@
-# React + MobX TodoMVC Example
+# React + MobX Todo with Multiple Tags
 
-This repository provides a reference implementation of the [TodoMVC](http://todomvc.com) application written using [MobX](https://github.com/mobxjs/mobx), [React](https://facebook.github.io/react) JSX and ES6.
+## Original Repostiory
+Original repository provides a reference implementation of the [TodoMVC](http://todomvc.com) application written using [MobX](https://github.com/mobxjs/mobx), [React](https://facebook.github.io/react) JSX and ES6.
+
+[Git](https://github.com/mobxjs/mobx-react-todomvc) 
+
+
+## My changes 
+- Enable users to specify one or more tags in order to categorize todo items. For example, if I create a todo item with the text "Contact candidates to explain the coding exercise", I might like to add a couple tags, one for "Hiring" and another for "Urgent".
+- Include an additional text box where the user can add new tags for a given item that's being edited.
 
 ## Running the example
 
@@ -13,15 +21,3 @@ open http://localhost:3000
 The example requires node 4.0 or higher
 
 ![TodoMVC](devtools.gif)
-
-## Changing the example
-
-If you are new to MobX, take a look at the [ten minutes, interactive introduction](https://mobxjs.github.io/mobx/getting-started.html) to MobX and React. MobX provides a refreshing way to manage your app state by combining mutable data structures with transparent reactive programming.
-
-The state and actions of this app are defined in two stores; `todoModel` and `viewModel`.
-This is not necessary but it provides a nice separation of concerns between data that effects the domain of the application and data that affects the user interface of the application.
-This is a useful distinction for testing, reuse in backend services etc.
-
-The project uses hot-reloading so most changes made to the app will be picked automatically.
-By default the `mobx-react-devtools` are enabled as well. During each rendering a small render report is printed on all updated components.
-The dev-tools can be disabled by commenting the `import` statement in `src/index.js`.
